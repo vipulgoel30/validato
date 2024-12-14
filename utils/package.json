@@ -1,0 +1,16 @@
+{
+  "name": "@mono/utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "Vipul Goel",
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.24.1"
+  }
+}
