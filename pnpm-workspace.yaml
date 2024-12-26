@@ -2,3 +2,4 @@ packages:
   - "backend"
   - "utils"
   - "validato"
+  - "package"
