@@ -1,6 +1,7 @@
 // Third party imports
 import { HydratedDocument, Schema, Types, model } from "mongoose";
 import isEmail from "validator/es/lib/isEmail";
+import { hash } from "bcryptjs";
 
 // User imports
 import { userErr } from "@mono/utils";
@@ -15,7 +16,7 @@ const verifySchema = new Schema<VerifyI>(
   {
     token: { type: String, required: true },
     expiresAt: { type: Date, required: true },
-    chancesLeft: { type: Number, required: true },
+    chancesLeft: { type: Number, required: true, min: 0, max: 5 },
   },
   { _id: false }
 );
@@ -30,7 +31,7 @@ const resetSchema = new Schema<ResetI>(
   {
     otp: { type: String, required: true },
     expiresAt: { type: Date, required: true },
-    chancesLeft: { type: Number, required: true },
+    chancesLeft: { type: Number, required: true, min: 0, max: 3 },
   },
   { _id: false }
 );
@@ -45,9 +46,15 @@ interface UserI {
   verify: VerifyI;
   reset: ResetI;
   createdAt: string;
+  logins: {
+    [key: string]: {
+      lastActiveAt: Date;
+      location: { name: string; type: string; coordinates: number[] };
+    };
+  };
 }
 
-const { nameErr, emailErr, passwordErr } = userErr;
+const { name: nameErr, email: emailErr, password: passwordErr } = userErr;
 
 const userSchema = new Schema<UserI>(
   {
@@ -81,6 +88,18 @@ const userSchema = new Schema<UserI>(
 
     verify: verifySchema,
     reset: resetSchema,
+    // {brandId : {lastActiveAt : Date, location: {name : "Unknown Device", type : "Point", coordinates : [10, 20]}}}
+    logins: {
+      type: Map,
+      of: {
+        lastActiveAt: { type: Date, default: () => Date.now() },
+        location: {
+          name: { type: String, default: "Unknown Device" },
+          type: { type: String, enum: ["Point"] },
+          coordinates: [Number],
+        },
+      },
+    },
   },
   {
     timestamps: { createdAt: true },
@@ -88,6 +107,19 @@ const userSchema = new Schema<UserI>(
     toObject: { virtuals: true },
   }
 );
+
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
+    this.password = await hash(this.password, 12);
+  }
+  next();
+});
+
+userSchema.virtual("brands", {
+  ref: "brands",
+  localField: "_id",
+  foreignField: "user",
+});
 
 const User = model("users", userSchema);
 

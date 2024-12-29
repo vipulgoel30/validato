@@ -5,6 +5,8 @@ export * from "./schemas/routes/auth.js";
 export * from "./errors/error.js";
 
 // functions
+export * from "./functions/getTime.js";
+export * from "./functions/catchAsync.js";
 export * from "./functions/errorLogger.js";
 export * from "./functions/retryAsync.js";
 

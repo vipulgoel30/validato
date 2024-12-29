@@ -8,6 +8,9 @@ NODE_ENV : string
 MONGO_USER : string
 MONGO_PASS : string
 MONGO_CONN : string
+CRYPTO_SECRET_KEY : string
+CRYPTO_IV : string
+ADMIN_KEY : string
       }
     }
   }

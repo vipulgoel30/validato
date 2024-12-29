@@ -11,7 +11,7 @@ export const createStringSchema = (fieldErrs: FieldErrMsg): ZodString => {
     ...(type && { invalid_type_error: type }),
   });
   if (minLength) schema = schema.min(minLength.length, minLength.msg);
-  if (maxLength) schema = schema.min(maxLength.length, maxLength.msg);
+  if (maxLength) schema = schema.max(maxLength.length, maxLength.msg);
   return schema;
 };
 
