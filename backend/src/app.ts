@@ -6,10 +6,9 @@ import helmet from "helmet";
 
 // User imports
 import globalErrorController from "./controllers/globalErrorController";
-import { createNotFoundError, getTime } from "@mono/utils";
+import { createNotFoundError } from "@mono/utils";
 import authRouter from "./routes/auth";
 import adminRouter from "./routes/admin";
-import User from "./models/user";
 
 const app: Express = express();
 
@@ -57,3 +56,4 @@ export default app;
 //     console.log(err);
 //   }
 // })();
+

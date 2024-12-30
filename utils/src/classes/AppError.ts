@@ -1,7 +1,7 @@
 export interface DeveloperError {
   message: string;
   statusCode?: number;
-  info?: string | string[];
+  details?: string | string[];
 }
 export interface CustomError {
   message: string;
@@ -38,4 +38,5 @@ export const createBadRequestError: CreateErrorReturnType = createError(400);
 export const createUnauthorizedError: CreateErrorReturnType = createError(401);
 export const createForbiddenError: CreateErrorReturnType = createError(403);
 export const createNotFoundError: CreateErrorReturnType = createError(404);
+export const createTooManyReqError: CreateErrorReturnType = createError(429);
 export const createInternalServerError: CreateErrorReturnType = createError(400);

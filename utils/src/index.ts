@@ -9,6 +9,7 @@ export * from "./functions/getTime.js";
 export * from "./functions/catchAsync.js";
 export * from "./functions/errorLogger.js";
 export * from "./functions/retryAsync.js";
+export * from "./functions/generateToken.js";
 
 // classes
 export * from "./classes/AppError.js";

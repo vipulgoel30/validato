@@ -78,8 +78,6 @@ const userSchema = new Schema<UserI>(
     password: {
       type: String,
       required: [true, passwordErr.required!],
-      minLength: [passwordErr.minLength!.length, passwordErr.minLength!.msg],
-      maxLength: [passwordErr.maxLength!.length, passwordErr.maxLength!.msg],
       trim: true,
     },
 
