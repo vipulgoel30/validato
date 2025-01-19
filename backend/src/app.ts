@@ -6,9 +6,13 @@ import helmet from "helmet";
 
 // User imports
 import globalErrorController from "./controllers/globalErrorController";
-import { createNotFoundError } from "@mono/utils";
+import { createNotFoundError, generateKey, parseKey } from "@mono/utils";
 import authRouter from "./routes/auth";
 import adminRouter from "./routes/admin";
+import User from "./models/user";
+import Brand from "./models/brands";
+import Keys from "./models/keys";
+import { crypto, jwt } from "./utils";
 
 const app: Express = express();
 
@@ -43,17 +47,3 @@ app.use("*", (req: Request, res: Response, next: NextFunction) => {
 app.use(globalErrorController);
 
 export default app;
-
-// (async () => {
-//   try {
-//     const user = await User.create({
-//       name: "vipyl",
-//       email: "vipul@gmail.com",
-//       password: "test1234",
-//     });
-//     console.log(user);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// })();
-

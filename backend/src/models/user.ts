@@ -6,6 +6,10 @@ import { hash } from "bcryptjs";
 // User imports
 import { userErr } from "@mono/utils";
 
+export const VERIFY_MAX_CHANCES = 5;
+export const VERIFY_EXPIRES_IN = "0 3"; // 3hrs
+export const VERIFY_RESET_IN = "0 12"; // 12hrs
+
 export interface VerifyI {
   token: string;
   expiresAt: Date;
@@ -16,7 +20,7 @@ const verifySchema = new Schema<VerifyI>(
   {
     token: { type: String, required: true },
     expiresAt: { type: Date, required: true },
-    chancesLeft: { type: Number, required: true, min: 0, max: 5 },
+    chancesLeft: { type: Number, required: true, min: 0, max: VERIFY_MAX_CHANCES },
   },
   { _id: false }
 );

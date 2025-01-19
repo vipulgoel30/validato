@@ -11,7 +11,6 @@ interface CountI {
 
 interface KeyI {
   _id: Types.ObjectId;
-  token: String;
   brand: Types.ObjectId;
   status: string;
   limits?: CountI;
@@ -21,11 +20,6 @@ interface KeyI {
 const { status: statusErr } = keyErr;
 
 const keySchema = new Schema<KeyI>({
-  token: {
-    type: String,
-    unique: true,
-    required: [true, "The token must be linked to a key."],
-  },
   brand: {
     type: Schema.ObjectId,
     required: [true, "The key must be linked to a brand."],
@@ -37,6 +31,7 @@ const keySchema = new Schema<KeyI>({
       values: Object.values(KeyStatus),
       message: statusErr.format!,
     },
+    default:KeyStatus.active
   },
 
   limits: {
@@ -45,16 +40,16 @@ const keySchema = new Schema<KeyI>({
   },
 
   usage: {
-    validate: { type: Number, min: 0 },
-    authorize: { type: Number, min: 0 },
+    validate: { type: Number, min: 0, default: 0 },
+    authorize: { type: Number, min: 0, default: 0 },
   },
 });
 
-keySchema.pre("save", function (next) {
-  this.usage.validate = 0;
-  this.usage.authorize = 0;
-  next();
-});
+// keySchema.pre("save", function (next) {
+//   this.usage.validate = 0;
+//   this.usage.authorize = 0;
+//   next();
+// });
 
 const Keys = model<KeyI>("keys", keySchema);
 

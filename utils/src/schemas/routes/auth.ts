@@ -5,8 +5,8 @@ import { z } from "zod";
 import { userSchema } from "../schema.js";
 
 export const loginSchema = z.object({
-  name: userSchema.name,
   email: userSchema.email,
+  password: userSchema.password,
 });
 
 export const signupSchema = z

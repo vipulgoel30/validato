@@ -31,13 +31,25 @@ const createFieldErrMsg = ({
   return {
     ...(required && { required: `Missing required field : ${field}` }),
     ...(minLength && {
-      minLength: { length: minLength, msg: `${field} too short. At least ${minLength} characters required!` },
+      minLength: {
+        length: minLength,
+        msg: `${field} too short. At least ${minLength} characters required!`,
+      },
     }),
     ...(maxLength && {
-      maxLength: { length: maxLength, msg: `${field} too long. At most ${maxLength} characters allowed!` },
+      maxLength: {
+        length: maxLength,
+        msg: `${field} too long. At most ${maxLength} characters allowed!`,
+      },
     }),
-    ...(expectedType && { type: `Unexpected type for '${field}'. Expected a ${expectedType}.` }),
-    ...(enumKeys && { format: `Invalid ${field}. Must be ${enumKeys.slice(0, -1).join(", ")} or ${enumKeys.at(-1)}.` }),
+    ...(expectedType && {
+      type: `Unexpected type for '${field}'. Expected a ${expectedType}.`,
+    }),
+    ...(enumKeys && {
+      format: `Invalid ${field}. Must be ${enumKeys.slice(0, -1).join(", ")}${
+        enumKeys.length > 1 ? "" : " or "
+      }${enumKeys.at(-1)}.`,
+    }),
   };
 };
 

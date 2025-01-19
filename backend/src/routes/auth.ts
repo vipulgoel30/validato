@@ -2,15 +2,14 @@
 import { Router } from "express";
 
 // User imports
-import { signup, verify, verifyToken } from "../controllers/authController";
+import { signup, verify, verifyResend, validateToken, validateEmail } from "../controllers/authController";
 
 const router: Router = Router();
 
-router.post("/", signup);
+router.post("/signup", signup);
 
-router.get("/verify/:route(validate|resend)/:token", verifyToken);
-router.get("/verify/validate/:token", verify);
-router.get("/verify/resend/:token", verify);
-router.post("/verify/resend/email", verify);
+router.get("/verify/token/validate", validateToken, verify);
+router.get("/verify/token/resend", validateToken, verifyResend);
+router.post("/verify/email/resend", validateEmail, verifyResend);
 
 export default router;

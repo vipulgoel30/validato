@@ -2,7 +2,7 @@ export const INFINITE = 100;
 export async function retryAsync<Type = any>(
   operation: () => Promise<Type>,
   retries: number = 3,
-  interval: number = 100,
+  interval: number = 50,
   maxInterval: number = 500,
   retryOperation?: () => Promise<any>
 ): Promise<Type> {
